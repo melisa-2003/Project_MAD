@@ -9,5 +9,8 @@ data class Event(
     val highlights: String = "",
     val organizerName: String = "",
     val category: String = "",
-    val imageRef: String = ""
+    val imageRef: String = "",
+
+    val featured: Boolean = false,
+    val viewCount: Long = 0
 )

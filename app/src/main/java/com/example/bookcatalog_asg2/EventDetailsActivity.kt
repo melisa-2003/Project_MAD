@@ -13,6 +13,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.*
+import com.google.firebase.firestore.FieldValue
 
 class EventDetailsActivity : AppCompatActivity() {
 
@@ -55,6 +56,8 @@ class EventDetailsActivity : AppCompatActivity() {
                     finish()
                     return@addOnSuccessListener
                 }
+
+                incrementViewCount(eventId)
 
                 val title = doc.getString("title")
                 val category = doc.getString("category")
@@ -99,6 +102,14 @@ class EventDetailsActivity : AppCompatActivity() {
                 Toast.makeText(this, "Failed to load event", Toast.LENGTH_SHORT).show()
             }
     }
+
+    // ------------ MOST CLICKED EVENT = TRENDING NOW EVENTS ----------------
+    private fun incrementViewCount(eventId: String) {
+        db.collection("events")
+            .document(eventId)
+            .update("viewCount", FieldValue.increment(1))
+    }
+
 
     // ---------------- SHARE ----------------
     private fun shareEvent(title: String?, dateTime: String?, venue: String?) {

@@ -208,7 +208,10 @@ class AddEditEventActivity : AppCompatActivity() {
             "overview" to overview,
             "highlights" to highlights,
             "category" to selectedCategory,
-            "imageRef" to imageUrl
+            "imageRef" to imageUrl,
+
+            "featured" to false,
+            "viewCount" to 0L
         )
 
         val collection = db.collection("events")
