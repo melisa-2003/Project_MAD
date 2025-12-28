@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "BookCatalog_Asg2"
+rootProject.name = "Unimas Event Hub"
 include(":app")
