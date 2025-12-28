@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.BookCatalog_Asg1">
+
+        <!-- SPLASH -->
+        <activity
+            android:name=".SplashScreen"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- LOGIN -->
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+
+        <!-- SIGN UP -->
+        <activity
+            android:name=".SignUpActivity"
+            android:exported="false" />
+
+        <!-- MAIN -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+
+        <!-- FORGOT PASSWORD -->
+        <activity
+            android:name=".ForgotPasswordActivity"
+            android:exported="false" />
+
+        <!-- ADD / EDIT EVENT -->
+        <activity
+            android:name=".AddEditEventActivity"
+            android:exported="false" />
+
+        <!-- EVENT LIST (View More 用) -->
+        <activity
+            android:name=".EventListActivity"
+            android:exported="false" />
+
+        <!-- EVENT DETAILS -->
+        <activity
+            android:name=".EventDetailsActivity"
+            android:exported="false" />
+
+        <!-- ADMIN -->
+        <activity
+            android:name=".AdminActivity"
+            android:exported="false" />
+    </application>
+
+</manifest>

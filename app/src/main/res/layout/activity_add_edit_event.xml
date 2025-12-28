@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/app_background"
+    tools:context=".AddEditEventActivity">
+
+    <!-- Header -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="93dp"
+        android:background="@color/orange_accent"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/create_event"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_centerVertical="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/content_desc_back_button"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_arrow_back_24"
+            app:tint="@color/black" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#DDDDDD"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/new_event"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="16sp"/>
+
+            <!-- Image Preview Area -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/bg_search_bar">
+
+                <ImageView
+                    android:id="@+id/imagePreview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerInside"
+                    android:src="@android:drawable/ic_menu_gallery"
+                    android:padding="40dp"
+                    app:tint="#CCCCCC"
+                    android:contentDescription="@null" />
+
+            </FrameLayout>
+
+            <!-- Image URL -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/image_url"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_marginBottom="4dp" />
+
+            <EditText
+                android:id="@+id/inputImageUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_search_bar"
+                android:hint="@string/paste_image_url"
+                android:padding="12dp"
+                android:textSize="14sp"
+                android:inputType="textUri"
+                android:autofillHints="none"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Event Title -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/event_title"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_marginBottom="4dp" />
+
+            <EditText
+                android:id="@+id/inputTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_search_bar"
+                android:hint="@string/enter_event_title"
+                android:padding="12dp"
+                android:textSize="14sp"
+                android:layout_marginBottom="16dp"
+                android:inputType="text"
+                android:autofillHints="none" />
+
+            <!-- Category -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/category"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_marginBottom="4dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/bg_search_bar">
+
+                <Spinner
+                    android:id="@+id/spinnerCategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:padding="12dp"
+                    android:spinnerMode="dropdown" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="12dp"
+                    app:tint="@color/black"
+                    android:contentDescription="@null" />
+            </RelativeLayout>
+
+            <!-- Date and Time -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:baselineAligned="false"
+                android:layout_marginBottom="16dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginEnd="8dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/date"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="4dp" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_search_bar">
+
+                        <EditText
+                            android:id="@+id/inputDate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@android:color/transparent"
+                            android:hint="@string/choose_date"
+                            android:padding="12dp"
+                            android:textSize="14sp"
+                            android:focusable="false"
+                            android:clickable="true"
+                            android:autofillHints="none"
+                            android:inputType="date" />
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="12dp"
+                            android:src="@drawable/ic_calendar"
+                            app:tint="@color/black"
+                            android:contentDescription="@null" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/time"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="4dp" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_search_bar">
+
+                        <EditText
+                            android:id="@+id/inputTime"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@android:color/transparent"
+                            android:hint="@string/choose_time"
+                            android:padding="12dp"
+                            android:textSize="14sp"
+                            android:focusable="false"
+                            android:clickable="true"
+                            android:autofillHints="none"
+                            android:inputType="time" />
+
+                        <ImageView
+                            android:id="@+id/timeIcon"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="12dp"
+                            android:src="@android:drawable/ic_menu_recent_history"
+                            app:tint="@color/black"
+                            android:contentDescription="@null" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Venue -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/venue"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_marginBottom="4dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/bg_search_bar">
+
+                <EditText
+                    android:id="@+id/inputVenue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:hint="@string/enter_venue"
+                    android:padding="12dp"
+                    android:textSize="14sp"
+                    android:autofillHints="none"
+                    android:inputType="text" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="12dp"
+                    android:src="@drawable/ic_location"
+                    app:tint="@color/black"
+                    android:contentDescription="@null" />
+            </RelativeLayout>
+
+            <!-- Organizer -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/organizer"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_marginBottom="4dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/bg_search_bar">
+
+                <EditText
+                    android:id="@+id/inputOrganizer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:hint="@string/enter_organizer_name"
+                    android:padding="12dp"
+                    android:textSize="14sp"
+                    android:autofillHints="none"
+                    android:inputType="text" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="12dp"
+                    android:src="@drawable/ic_user"
+                    app:tint="@color/black"
+                    android:contentDescription="@null" />
+            </RelativeLayout>
+
+            <!-- Overview -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/overview"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_marginBottom="4dp" />
+
+            <EditText
+                android:id="@+id/inputOverview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_search_bar"
+                android:text="@string/enter_description"
+                android:padding="12dp"
+                android:textSize="14sp"
+                android:layout_marginBottom="16dp"
+                android:minLines="3"
+                android:gravity="top"
+                android:inputType="textMultiLine"
+                android:autofillHints="none" />
+
+            <!-- Highlights -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/highlights"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_marginBottom="4dp" />
+
+            <EditText
+                android:id="@+id/inputHighlights"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_search_bar"
+                android:text="@string/enter_description"
+                android:padding="12dp"
+                android:textSize="14sp"
+                android:layout_marginBottom="24dp"
+                android:minLines="3"
+                android:gravity="top"
+                android:inputType="textMultiLine"
+                android:autofillHints="none" />
+
+            <!-- Buttons -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                style="?android:attr/buttonBarStyle">
+
+                <Button
+                    android:id="@+id/btnSave"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    android:text="@string/save"
+                    android:textColor="@color/white"
+                    android:backgroundTint="@color/orange_accent"
+                    app:strokeWidth="0dp"
+                    style="?android:attr/buttonBarButtonStyle" />
+
+                <Button
+                    android:id="@+id/btnCancel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/cancel"
+                    android:textColor="@color/white"
+                    android:backgroundTint="@color/orange_accent"
+                    app:strokeWidth="0dp"
+                    style="?android:attr/buttonBarButtonStyle" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/inputCost"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:visibility="gone"
+                android:autofillHints="none"
+                android:inputType="numberDecimal"
+                tools:ignore="MissingConstraints" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="dark_grey">#3B3B3B</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="edit_btn_color">#4A4458</color>
+    <color name="orange_accent">#FF8400</color>
+    <color name="orange_accent_dark">#E96006</color>
+    <color name="app_background">#FDF7EC</color>
+
+</resources>

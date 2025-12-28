@@ -1,0 +1,122 @@
+<resources>
+    <!-- App -->
+    <string name="app_name">UNIMAS Event Hub</string>
+
+    <!-- Splash -->
+    <string name="tagline">Stay Connected. Never Miss an Event</string>
+    <string name="get_started">Get Started</string>
+    <string name="app_name_full">UNIMAS Event Hub</string>
+
+    <!-- Login -->
+    <string name="welcome_back">Welcome back</string>
+    <string name="please_login">Please login to continue</string>
+    <string name="email_address">Email address</string>
+    <string name="your_email">Your email</string>
+    <string name="password">Password</string>
+    <string name="your_password">Your password</string>
+    <string name="login">Login</string>
+    <string name="don_t_have_account_sign_up_now">Don’t have an account? Sign up now</string>
+
+    <!-- Forgot password -->
+    <string name="forgot_password">Reset password</string>
+    <string name="please_type_your_email_to_reset_your_password">Please type your email to reset your password.</string>
+    <string name="reset_password_instruction">
+        Please type your email to reset your password.
+    </string>
+    <string name="send_reset_email">Send reset email</string>
+
+    <!-- Sign up -->
+    <string name="sign_up">Sign up</string>
+    <string name="username">Username</string>
+    <string name="your_username">Your username</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="confirm_your_password">Confirm your password</string>
+    <string name="sign_up_to_get_started">Sign up to get started</string>
+    <string name="have_an_account_login_here">Have an account? Login here</string>
+
+    <!-- Home -->
+    <string name="greeting_user">Hi! %1$s</string>
+    <string name="greeting_default">Hi! User</string>
+    <string name="find_events">Find events</string>
+    <string name="available_events">Available events</string>
+    <string name="notifications">Notifications</string>
+    <string name="error_load_events">Failed to load events</string>
+    <string name="filter">Filter</string>
+
+    <!-- Categories -->
+    <string name="all">All</string>
+    <string name="event">Event</string>
+    <string name="workshop">Workshop</string>
+    <string name="talk">Talk</string>
+    <string name="club">Club</string>
+
+    <!-- Event card -->
+    <string name="event_title">Event title</string>
+    <string name="date_time">Date &amp; time</string>
+    <string name="venue">Venue</string>
+    <string name="organizer">Organizer</string>
+    <string name="view_details">View details</string>
+    <string name="organizer_name">Organizer</string>
+
+    <!-- Event details -->
+    <string name="event_details">Event details</string>
+    <string name="overview">Overview</string>
+    <string name="highlights">Highlights</string>
+    <string name="add_to_calendar">Add to calendar</string>
+    <string name="register_now">Register now</string>
+    <string name="category_tag">Category Tag</string>
+    <string name="content_desc_date_icon">Content description for date icon</string>
+    <string name="content_desc_venue_icon">Content description for venue icon</string>
+    <string name="content_desc_organizer_icon">Content description for organizer icon</string>
+
+    <!-- Add / Edit event -->
+    <string name="create_event">Create event</string>
+    <string name="new_event">New event</string>
+    <string name="enter_event_title">Enter event title</string>
+    <string name="date">Date</string>
+    <string name="choose_date">Choose date</string>
+    <string name="time">Time</string>
+    <string name="choose_time">Choose time</string>
+    <string name="enter_venue">Enter venue</string>
+    <string name="enter_organizer_name">Enter organizer name</string>
+    <string name="enter_description">Enter a description</string>
+    <string name="enter_highlights">Enter highlights</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="update_event">Update event</string>
+    <string name="image_url">Image URL</string>
+    <string name="paste_image_url">Paste image URL</string>
+    <string name="category">Category</string>
+
+    <!-- Admin -->
+    <string name="admin">Admin</string>
+    <string name="event_list">Event list</string>
+    <string name="add_new_event">Add new event"</string>
+
+    <!-- Content descriptions -->
+    <string name="content_desc_back_button">Back</string>
+    <string name="content_desc_share">Share</string>
+    <string name="content_desc_event_banner">Event banner</string>
+    <string name="content_desc_bookmark">Bookmark</string>
+
+    <!-- Bottom navigation -->
+    <string name="home">Home</string>
+    <string name="discover">Discover</string>
+    <string name="my_events">My Events</string>
+    <string name="profile">Profile</string>
+
+    <!-- Menus -->
+    <string name="share">Share</string>
+    <string name="sign_out">Sign out</string>
+
+    <!-- Spinner -->
+    <string-array name="event_categories">
+        <item>Event</item>
+        <item>Workshop</item>
+        <item>Talk</item>
+        <item>Career</item>
+        <item>Competition</item>
+    </string-array>
+</resources>
+
+

@@ -1,0 +1,38 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.BookCatalog_Asg1"
+        parent="Theme.MaterialComponents.DayNight.NoActionBar">
+
+        <item name="colorPrimary">@color/orange_accent</item>
+        <item name="colorPrimaryVariant">@color/orange_accent_dark</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="android:windowBackground">@color/app_background</item>
+        <item name="android:statusBarColor">?attr/colorPrimary</item>
+    </style>
+
+    <style name="Theme.BookCatalog_Asg1"
+        parent="Base.Theme.BookCatalog_Asg1" />
+
+    <!-- Style for the toolbar title -->
+    <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">28sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="Toolbar.TitleText.WhiteBold" parent="Toolbar.TitleText">
+        <item name="android:textFontWeight">600</item>
+    </style>
+
+    <!-- Text style for overflow menu items -->
+    <style name="CustomMenuTextAppearance"
+        parent="TextAppearance.Material3.HeadlineSmall">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+    </style>
+
+    <!-- Popup menu theme for toolbar -->
+    <style name="CustomPopupMenu" parent="ThemeOverlay.Material3.Light">
+        <item name="textAppearanceListItem">@style/CustomMenuTextAppearance</item>
+    </style>
+
+</resources>

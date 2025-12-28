@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:fitsSystemWindows="true">
+
+    <!-- Top Bar Background -->
+    <View
+        android:id="@+id/top_bar_bg"
+        android:layout_width="409dp"
+        android:layout_height="72dp"
+        android:background="@color/orange_accent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Back Button -->
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="63dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/bg_orange_circle"
+        android:backgroundTint="@color/orange_accent"
+        android:contentDescription="@string/content_desc_back_button"
+        android:padding="8dp"
+        android:src="@drawable/ic_arrow_back_24"
+        app:layout_constraintBottom_toBottomOf="@id/top_bar_bg"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/top_bar_bg"
+        app:layout_constraintVertical_bias="0.625"
+        app:tint="@android:color/black" />
+
+    <!-- Admin Title -->
+    <TextView
+        android:id="@+id/tv_admin_title"
+        android:layout_width="88dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="84dp"
+        android:text="@string/admin"
+        android:textColor="@android:color/black"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/top_bar_bg"
+        app:layout_constraintStart_toEndOf="@id/backButton"
+        app:layout_constraintTop_toTopOf="@id/top_bar_bg"
+        app:layout_constraintVertical_bias="0.565" />
+
+    <!-- Event List Header -->
+    <TextView
+        android:id="@+id/tv_event_list_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/event_list"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/top_bar_bg" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_admin_events"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_event_list_header"
+        app:layout_constraintVertical_bias="0.0"
+        tools:listitem="@layout/item_admin_event" />
+
+    <!-- Add Event FAB -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_add_event"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:contentDescription="@string/add_new_event"
+        android:src="@android:drawable/ic_input_add"
+        app:backgroundTint="@android:color/white"
+        app:fabCustomSize="64dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:maxImageSize="32dp"
+        app:tint="@android:color/black" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
