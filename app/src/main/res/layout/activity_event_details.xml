@@ -8,7 +8,7 @@
     <!-- Top Toolbar -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/toolbar"
-        android:layout_width="407dp"
+        android:layout_width="460dp"
         android:layout_height="119dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -93,7 +93,9 @@
                 android:text="@string/category_tag"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/iv_event_banner" />
+                app:layout_constraintTop_toBottomOf="@+id/iv_event_banner"
+                app:backgroundTint="@color/orange_accent_dark"
+                android:textColor="@android:color/white"/>
 
             <TextView
                 android:id="@+id/tv_event_title"
@@ -187,7 +189,7 @@
                 android:layout_marginEnd="16dp"
                 android:text="@string/add_to_calendar"
                 android:textAllCaps="false"
-                android:textColor="@android:color/black"
+                android:textColor="@android:color/white"
                 android:textSize="12sp"
                 app:cornerRadius="8dp"
                 app:icon="@drawable/ic_calendar"
@@ -195,7 +197,8 @@
                 app:layout_constraintBottom_toBottomOf="@+id/tv_organizer"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/iv_organizer_icon"
-                app:strokeColor="#757575" />
+                app:strokeColor="#757575"
+                app:backgroundTint="@color/blue"/>
 
             <!-- Overview Section -->
             <TextView
