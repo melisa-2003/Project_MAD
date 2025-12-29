@@ -108,6 +108,11 @@
     <!-- Menus -->
     <string name="share">Share</string>
     <string name="sign_out">Sign out</string>
+    <string name="my_event">My Event</string>
+    <string name="open_calendar">Open Calendar</string>
+    <string name="registered">Registered</string>
+    <string name="bookmarked">Bookmarked</string>
+    <string name="no_events_found">No events found</string>
 
     <!-- Profile -->
     <string name="profile_sign_out">Sign Out</string>
