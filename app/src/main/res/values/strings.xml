@@ -162,6 +162,19 @@
     <string name="ContactUs_email_cd">email</string>
     <string name="ContactUs_call_us_cd">call us</string>
 
+    <!-- Missing Strings -->
+    <string name="sort_by">Sort By</string>
+    <string name="relevance">Relevance</string>
+    <string name="today">Today</string>
+    <string name="this_week">This Week</string>
+    <string name="this_month">This Month</string>
+    <string name="clear">Clear</string>
+    <string name="apply">Apply</string>
+    <string name="search">Search</string>
+    <string name="recent_searches">Recent Searches</string>
+    <string name="trending_searches">Trending Searches</string>
+    <string name="competition">Competition</string>
+
     <!-- Spinner -->
     <string-array name="event_categories">
         <item>Event</item>
@@ -183,5 +196,3 @@
     <string name="trending_searches">Trending Searches</string>
     <string name="competition">Competition</string>
 </resources>
-
-
