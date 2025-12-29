@@ -124,6 +124,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             )
         }
 
+        // Notification
+        binding.ivNotifications.setOnClickListener {
+            startActivity(
+                Intent(requireContext(), NotificationActivity::class.java)
+            )
+        }
+
         // Search typing
         binding.etSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
