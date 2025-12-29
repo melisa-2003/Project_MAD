@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ProfileMenuItem" parent="Widget.AppCompat.TextView">
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:drawablePadding">16dp</item>
+        <item name="android:drawableEnd">@drawable/ic_arrow_right</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+
+        <!-- 添加下面这一行来实现垂直居中 -->
+        <item name="android:gravity">center_vertical</item>
+
+    </style>
+</resources>

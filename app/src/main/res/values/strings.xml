@@ -109,6 +109,54 @@
     <string name="share">Share</string>
     <string name="sign_out">Sign out</string>
 
+    <!-- Profile -->
+    <string name="profile_sign_out">Sign Out</string>
+    <string name="profile_contact_us">Contact Us</string>
+    <string name="profile_about_us">About Us</string>
+    <string name="profile_support">Support</string>
+    <string name="profile_theme">Theme</string>
+    <string name="profile_manage_notification">Manage Notification</string>
+    <string name="profile_interests">Interests</string>
+    <string name="profile_preferences">Preferences</string>
+    <string name="profile_email_address">Email Address</string>
+    <string name="profile_username">Username</string>
+    <string name="profile_title">Profile</string>
+    <string name="profile_user_avatar_description">profile_person_image</string>
+    <!-- InterestsFragment -->
+    <string name="interests_title">Tell us what you like</string>
+    <string name="interests_clear">Clear</string>
+    <string name="interests_save">Save</string>
+    <string name="Interests_workshop">Workshop</string>
+    <string name="Interests_event">Event</string>
+    <string name="Interests_career">Career</string>
+    <string name="Interests_talks">Talks</string>
+    <string name="Interests_club">Club</string>
+    <string name="Interests_competition">Competition</string>
+    <string name="Interests_charity">Charity</string>
+    <string name="Interests_festival">Festival</string>
+    <string name="Interests_sports">Sports</string>
+    <!-- NotificationFragment -->
+    <string name="Notification_get_alert_in_your_phone">Get alert in your phone</string>
+    <string name="Notification_get_alert_in_your_email">Get alert in your email</string>
+    <string name="Notification_event_reminder">Event reminder</string>
+    <!-- AboutUsFragment -->
+    <string name="AboutUs_unimas_event_hub">Unimas Event Hub</string>
+    <string name="AboutUs_version_1_0">Version 1.0</string>
+    <string name="AboutUs_our_mission">Our mission:</string>
+    <string name="AboutUs_mission_content">\"Connect Campus. See Every Event.\"</string>
+    <string name="AboutUs_meet_the_team">Meet the team:</string>
+    <string name="AboutUs_team_member">• Ivy Jong Zi Eng (99198)\n• Albertina Ngu Yan Si (98025)\n• Melisa Lai Wan Jiun (99663)\n• Thian Shing Hui (101214)</string>
+    <!-- ContactUsFragment -->
+    <string name="ContactUs_have_questions">Have Questions?</string>
+    <string name="ContactUs_email_us">Email Us:</string>
+    <string name="ContactUs_support_email">support@ueh.uni</string>
+    <string name="ContactUs_call_us">Call Us:</string>
+    <string name="ContactUs_call_us_60_82_123_456">+60 82–123 456</string>
+    <string name="ContactUs_available">Available:</string>
+    <string name="ContactUs_available_mon_fri_n8_00_am_5_00_pm">Mon - Fri:\n8:00 AM - 5:00 PM</string>
+    <string name="ContactUs_email_cd">email</string>
+    <string name="ContactUs_call_us_cd">call us</string>
+
     <!-- Spinner -->
     <string-array name="event_categories">
         <item>Event</item>
