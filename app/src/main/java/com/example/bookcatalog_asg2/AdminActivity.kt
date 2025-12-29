@@ -5,8 +5,10 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bookcatalog_asg2.databinding.ActivityAdminBinding
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class AdminActivity : AppCompatActivity() {
@@ -15,14 +17,18 @@ class AdminActivity : AppCompatActivity() {
     private val db = FirebaseFirestore.getInstance()
     private lateinit var adapter: AdminEventAdapter
     private val eventList = mutableListOf<Event>()
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAdminBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        auth = FirebaseAuth.getInstance()
+
         setupRecyclerView()
         setupListeners()
+        setupSignOutMenu()
     }
 
     override fun onResume() {
@@ -30,6 +36,7 @@ class AdminActivity : AppCompatActivity() {
         loadEvents()
     }
 
+    // ---------------- RECYCLER VIEW ----------------
     private fun setupRecyclerView() {
         adapter = AdminEventAdapter(
             events = eventList,
@@ -47,16 +54,34 @@ class AdminActivity : AppCompatActivity() {
         binding.rvAdminEvents.adapter = adapter
     }
 
+    // ---------------- LISTENERS ----------------
     private fun setupListeners() {
-        binding.backButton.setOnClickListener {
-            finish()
-        }
-
         binding.fabAddEvent.setOnClickListener {
             startActivity(Intent(this, AddEditEventActivity::class.java))
         }
     }
 
+    // ---------------- SIGN OUT MENU ----------------
+    private fun setupSignOutMenu() {
+        binding.btnSignOut.setOnClickListener {
+            val popupMenu = PopupMenu(this, binding.btnSignOut)
+            popupMenu.menuInflater.inflate(R.menu.sign_out_menu, popupMenu.menu)
+
+            popupMenu.setOnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    R.id.action_sign_out -> {
+                        signOutAdmin()
+                        true
+                    }
+                    else -> false
+                }
+            }
+
+            popupMenu.show()
+        }
+    }
+
+    // ---------------- FIRESTORE ----------------
     private fun loadEvents() {
         db.collection("events")
             .get()
@@ -80,6 +105,7 @@ class AdminActivity : AppCompatActivity() {
             }
     }
 
+    // ---------------- DELETE EVENT ----------------
     private fun showDeleteConfirmationDialog(event: Event) {
         AlertDialog.Builder(this)
             .setTitle("Delete Event")
@@ -106,4 +132,15 @@ class AdminActivity : AppCompatActivity() {
                 ).show()
             }
     }
+
+    // ---------------- SIGN OUT ----------------
+    private fun signOutAdmin() {
+        auth.signOut()
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        finish()
+    }
 }
+
+
