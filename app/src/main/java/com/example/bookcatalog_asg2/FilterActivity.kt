@@ -5,12 +5,20 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.appbar.MaterialToolbar
 
 class FilterActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_filter)
+
+        val backButton = findViewById<ImageButton>(R.id.backButton)
+
+        backButton.setOnClickListener {
+            finish() // return to HomeFragment
+        }
+
 
         // Buttons
         val btnApply = findViewById<Button>(R.id.btn_apply)

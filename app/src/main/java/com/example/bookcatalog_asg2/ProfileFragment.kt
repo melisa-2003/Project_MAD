@@ -77,6 +77,7 @@ class ProfileFragment : Fragment() {
     private fun navigateTo(fragment: Fragment) {
         activity?.supportFragmentManager?.beginTransaction()
             ?.replace(R.id.fragment_container, fragment)
+            ?.addToBackStack(null) // Add this line to save the transaction
             ?.commit()
     }
 

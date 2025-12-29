@@ -1,25 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/app_background"
     android:fitsSystemWindows="true">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.Material3.Dark.ActionBar">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/topAppBar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize">
+            android:layout_height="80dp"
+            android:background="@color/orange_accent_dark"
+            app:titleTextColor="@color/white">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_marginStart="16dp"
                 android:text="@string/profile_title"
-                android:textColor="?attr/colorOnPrimary"
-                android:textSize="22sp"
+                android:textColor="@android:color/white"
+                android:textSize="24sp"
                 android:textStyle="bold" />
 
         </com.google.android.material.appbar.MaterialToolbar>
@@ -52,8 +57,9 @@
                     android:layout_height="72dp"
                     android:background="@drawable/profile_image_border"
                     android:padding="4dp"
-                    android:src="@drawable/ic_person"
-                    android:contentDescription="@string/profile_user_avatar_description" />
+                    android:src="@drawable/ic_user"
+                    android:contentDescription="@string/profile_user_avatar_description"
+                    app:tint="@android:color/white"/>
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -69,7 +75,7 @@
                         android:text="@string/profile_username"
                         android:textSize="18sp"
                         android:textStyle="bold"
-                        android:textColor="?android:attr/textColorPrimary" />
+                        android:textColor="@android:color/black" />
 
                     <TextView
                         android:id="@+id/email_address_text"
@@ -77,7 +83,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/profile_email_address"
                         android:textSize="14sp"
-                        android:textColor="?android:attr/textColorSecondary" />
+                        android:textColor="#757575" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -88,21 +94,35 @@
                 android:layout_height="wrap_content"
                 android:text="@string/profile_preferences"
                 android:textStyle="bold"
-                android:textColor="?android:attr/textColorPrimary" />
+                android:textColor="@android:color/black" />
 
             <TextView
                 android:id="@+id/interests_button"
                 style="@style/ProfileMenuItem"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/profile_interests" />
+                android:paddingVertical="16dp"
+                android:text="@string/profile_interests"
+                android:textColor="@android:color/black"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#E0E0E0"/>
 
             <TextView
                 android:id="@+id/manage_notification_button"
                 style="@style/ProfileMenuItem"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/profile_manage_notification" />
+                android:paddingVertical="16dp"
+                android:text="@string/profile_manage_notification"
+                android:textColor="@android:color/black"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#E0E0E0"/>
 
             <!-- Support part -->
             <TextView
@@ -112,21 +132,35 @@
                 android:layout_marginTop="24dp"
                 android:text="@string/profile_support"
                 android:textStyle="bold"
-                android:textColor="?android:attr/textColorPrimary" />
+                android:textColor="@android:color/black" />
 
             <TextView
                 android:id="@+id/about_us_button"
                 style="@style/ProfileMenuItem"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/profile_about_us" />
+                android:paddingVertical="16dp"
+                android:text="@string/profile_about_us"
+                android:textColor="@android:color/black"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#E0E0E0"/>
 
             <TextView
                 android:id="@+id/contact_us_button"
                 style="@style/ProfileMenuItem"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/profile_contact_us" />
+                android:paddingVertical="16dp"
+                android:text="@string/profile_contact_us"
+                android:textColor="@android:color/black"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#E0E0E0"/>
 
             <!-- Sign out -->
             <LinearLayout
@@ -146,20 +180,19 @@
                     android:layout_height="28dp"
                     android:contentDescription="@string/profile_sign_out"
                     android:src="@drawable/ic_sign_out"
-                    app:tint="?attr/colorError" />
+                    app:tint="@android:color/holo_red_dark" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:text="@string/profile_sign_out"
-                    android:textColor="?attr/colorError"
-                    android:textSize="25sp" />
+                    android:textColor="@android:color/holo_red_dark"
+                    android:textSize="18sp"
+                    android:textStyle="bold"/>
             </LinearLayout>
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-

@@ -45,13 +45,6 @@ class MyEventsFragment : Fragment(R.layout.fragment_my_events) {
     }
 
     private fun setupListeners() {
-        // Back Button
-        binding.backButton.setOnClickListener {
-            // Since this is a main navigation tab, "back" usually means go to Home
-            val bottomNav = requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation)
-            bottomNav.selectedItemId = R.id.nav_home
-        }
-
         // Toggle Group
         binding.toggleGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
             if (!isChecked) return@addOnButtonCheckedListener

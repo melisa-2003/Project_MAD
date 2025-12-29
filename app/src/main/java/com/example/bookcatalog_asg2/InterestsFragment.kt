@@ -27,10 +27,8 @@ class InterestsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.topAppBar.setNavigationOnClickListener {
-            activity?.supportFragmentManager?.beginTransaction()
-                ?.replace(R.id.fragment_container, ProfileFragment()) // <-- 确保容器ID正确
-                ?.commit()
+        binding.backButton.setOnClickListener {
+            requireActivity().supportFragmentManager.popBackStack()
         }
 
         binding.clearButton.setOnClickListener {

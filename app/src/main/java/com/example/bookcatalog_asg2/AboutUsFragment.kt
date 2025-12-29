@@ -20,10 +20,10 @@ class AboutUsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.topAppBar.setNavigationOnClickListener {
-            activity?.supportFragmentManager?.beginTransaction()
-                ?.replace(R.id.fragment_container, ProfileFragment())
-                ?.commit()
+        binding.backButton.setOnClickListener {
+            requireActivity()
+                .supportFragmentManager
+                .popBackStack()
         }
     }
 

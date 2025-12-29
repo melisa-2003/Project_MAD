@@ -21,11 +21,12 @@ class ContactUsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // 返回按钮逻辑
-        binding.topAppBar.setNavigationOnClickListener {
-            activity?.supportFragmentManager?.beginTransaction()
-                ?.replace(R.id.fragment_container, ProfileFragment())
-                ?.commit()
+        binding.backButton.setOnClickListener {
+            requireActivity()
+                .supportFragmentManager
+                .popBackStack()
         }
+
     }
 
     override fun onDestroyView() {

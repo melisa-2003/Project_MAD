@@ -186,4 +186,16 @@
     <string name="sign_out_button">Sign Out Button</string>
     <string name="admin_edit_button">Admin Edit Button</string>
     <string name="admin_delete_button">Admin delete button</string>
+    <string name="calender_image">calender image</string>
+    <string name="location_image">Location image</string>
+    <string name="event_image">Event image</string>
+    <string name="bookmark_icon_image">Bookmark icon image</string>
+    <string name="view_more">View More</string>
+    <string name="explore_nearby_events">Explore Nearby Events</string>
+    <string name="featured_events">Featured Events</string>
+    <string name="trending_now">Trending Now</string>
+    <string name="recommend_for_you">Recommend For You</string>
+    <string name="cancel_registration">Cancel Registration</string>
+    <string name="phone_icon">Phone icon</string>
+    <string name="push_notification">Push Notification</string>
 </resources>

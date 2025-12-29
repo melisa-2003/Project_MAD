@@ -2,14 +2,15 @@ package com.example.bookcatalog_asg2
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.bookcatalog_asg2.databinding.ItemEventCardBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
-import com.google.firebase.firestore.FieldValue
 
 class EventAdapter(
     private val onEventClick: (Event) -> Unit
@@ -54,12 +55,8 @@ class EventAdapter(
                 ivEventImage.setImageResource(android.R.drawable.ic_menu_gallery)
             }
 
-            // Bookmark Status
-            if (bookmarkedEventIds.contains(event.id)) {
-                ivSave.setColorFilter(ContextCompat.getColor(root.context, R.color.orange_accent))
-            } else {
-                ivSave.setColorFilter(ContextCompat.getColor(root.context, android.R.color.black))
-            }
+            // Set initial bookmark state
+            updateBookmarkState(ivSave, bookmarkedEventIds.contains(event.id))
 
             // Bookmark Click Listener
             ivSave.setOnClickListener {
@@ -72,18 +69,27 @@ class EventAdapter(
         }
     }
 
-    private fun toggleBookmark(event: Event, bookmarkBtn: android.widget.ImageView) {
+    private fun updateBookmarkState(bookmarkBtn: ImageView, isBookmarked: Boolean) {
+        if (isBookmarked) {
+            bookmarkBtn.setImageResource(R.drawable.ic_bookmark) // Filled icon
+            bookmarkBtn.setColorFilter(ContextCompat.getColor(bookmarkBtn.context, R.color.orange_accent_dark))
+        } else {
+            bookmarkBtn.setImageResource(R.drawable.bookmark) // Outline icon
+            bookmarkBtn.setColorFilter(ContextCompat.getColor(bookmarkBtn.context, android.R.color.black))
+        }
+    }
+
+    private fun toggleBookmark(event: Event, bookmarkBtn: ImageView) {
         val uid = auth.currentUser?.uid ?: return
         val isCurrentlyBookmarked = bookmarkedEventIds.contains(event.id)
         val newStatus = !isCurrentlyBookmarked
 
         if (newStatus) {
             bookmarkedEventIds.add(event.id)
-            bookmarkBtn.setColorFilter(ContextCompat.getColor(bookmarkBtn.context, R.color.orange_accent))
         } else {
             bookmarkedEventIds.remove(event.id)
-            bookmarkBtn.setColorFilter(ContextCompat.getColor(bookmarkBtn.context, android.R.color.black))
         }
+        updateBookmarkState(bookmarkBtn, newStatus)
 
         // Update Firestore
         val data = mapOf("bookmarked" to newStatus, "timestamp" to FieldValue.serverTimestamp())
@@ -103,8 +109,6 @@ class EventAdapter(
         displayedEvents.addAll(events)
 
         loadUserBookmarks()
-
-        notifyDataSetChanged()
     }
 
     private fun loadUserBookmarks() {

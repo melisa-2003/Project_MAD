@@ -31,7 +31,7 @@
         android:padding="4dp"
         android:src="@drawable/notification"
         android:contentDescription="@string/notifications"
-        app:tint="@android:color/black"
+        app:tint="@color/orange_accent_dark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/tv_greeting"
         app:layout_constraintBottom_toBottomOf="@id/tv_greeting" />
@@ -70,7 +70,7 @@
             android:padding="12dp"
             android:src="@drawable/filter"
             android:contentDescription="@string/filter"
-            app:tint="@android:color/black" />
+            app:tint="@color/black" />
     </LinearLayout>
 
     <!-- Category Chips -->
