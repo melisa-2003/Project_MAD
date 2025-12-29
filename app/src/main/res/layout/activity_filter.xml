@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_background">
+
+    <!-- TOP BAR -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar_filter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:title="Filter"
+        android:titleTextColor="@color/white"
+        android:background="@color/orange_accent_dark"
+        app:elevation="4dp"/>
+
+    <!-- Header -->
+    <TextView
+        android:id="@+id/tv_filter_title"
+        android:layout_width="113dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="40dp"
+        android:padding="16dp"
+        android:text="@string/filter"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Categories -->
+    <TextView
+        android:id="@+id/tv_categories"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/category"
+        android:textStyle="bold"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_filter_title"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/ll_categories"
+        android:layout_width="381dp"
+        android:layout_height="173dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_search_bar"
+        android:layoutDirection="rtl"
+        android:orientation="vertical"
+        android:padding="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_categories">
+
+        <CheckBox
+            android:layout_width="357dp"
+            android:layout_height="35dp"
+            android:text="@string/event"
+            android:textDirection="ltr" />
+
+        <CheckBox
+            android:layout_width="357dp"
+            android:layout_height="33dp"
+            android:text="@string/workshop"
+            android:textDirection="ltr" />
+
+        <CheckBox
+            android:layout_width="356dp"
+            android:layout_height="37dp"
+            android:text="@string/talk"
+            android:textDirection="ltr" />
+
+        <CheckBox
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/club"
+            android:textDirection="ltr" />
+    </LinearLayout>
+
+    <!-- Sort By -->
+    <TextView
+        android:id="@+id/tv_sort"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sort_by"
+        android:textStyle="bold"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/ll_categories"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <RadioGroup
+        android:id="@+id/rg_sort"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layoutDirection="rtl"
+        android:background="@drawable/bg_search_bar"
+        android:padding="12dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_sort"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <RadioButton
+            android:layout_width="355dp"
+            android:layout_height="36dp"
+            android:text="@string/relevance"
+            android:textDirection="ltr" />
+
+        <RadioButton
+            android:layout_width="351dp"
+            android:layout_height="36dp"
+            android:text="@string/date"
+            android:textDirection="ltr" />
+    </RadioGroup>
+
+    <!-- Date -->
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/date"
+        android:textStyle="bold"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/rg_sort"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <RadioGroup
+        android:id="@+id/rg_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layoutDirection="rtl"
+        android:background="@drawable/bg_search_bar"
+        android:padding="12dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_date"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/today"
+            android:textDirection="ltr" />
+
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/this_week"
+            android:textDirection="ltr" />
+
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/this_month"
+            android:textDirection="ltr" />
+    </RadioGroup>
+
+    <!-- Buttons -->
+    <LinearLayout
+        android:layout_width="260dp"
+        android:layout_height="53dp"
+        android:layout_margin="16dp"
+        android:layout_marginBottom="16dp"
+        android:gravity="end"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.245"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/btn_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="53dp"
+            android:text="@string/clear" />
+
+        <Button
+            android:id="@+id/btn_apply"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="12dp"
+            android:text="@string/apply" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
