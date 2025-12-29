@@ -65,12 +65,6 @@ class ProfileFragment : Fragment() {
             navigateTo(ManageNotificationFragment())
         }
 
-        binding.themeButton.setOnClickListener {
-            // 你需要先创建 ThemeFragment
-            Toast.makeText(context, "Theme Clicked", Toast.LENGTH_SHORT).show()
-            // navigateTo(ThemeFragment())
-        }
-
         binding.aboutUsButton.setOnClickListener {
             navigateTo(AboutUsFragment())
         }

@@ -170,6 +170,18 @@
         <item>Career</item>
         <item>Competition</item>
     </string-array>
+    <!-- For Filter and Search Activities -->
+    <string name="sort_by">Sort by</string>
+    <string name="relevance">Relevance</string>
+    <string name="today">Today</string>
+    <string name="this_week">This week</string>
+    <string name="this_month">This month</string>
+    <string name="clear">Clear</string>
+    <string name="apply">Apply</string>
+    <string name="search">Search</string>
+    <string name="recent_searches">Recent Searches</string>
+    <string name="trending_searches">Trending Searches</string>
+    <string name="competition">Competition</string>
 </resources>
 
 

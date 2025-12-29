@@ -42,7 +42,7 @@ class DiscoverFragment : Fragment() {
         val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar_discover)
 
         toolbar.title = "Discover"
-        toolbar.setTitleTextColor(resources.getColor(android.R.color.white))
+        toolbar.setTitleTextColor(androidx.core.content.ContextCompat.getColor(requireContext(), android.R.color.white))
 
         rvFeatured.adapter = featuredAdapter
         rvTrending.adapter = trendingAdapter

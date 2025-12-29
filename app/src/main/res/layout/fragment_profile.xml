@@ -37,7 +37,7 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- 用户信息部分 -->
+            <!-- user profile -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -81,7 +81,7 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- Preferences 部分 -->
+            <!-- Preferences part -->
             <TextView
                 style="@style/TextAppearance.Material3.TitleMedium"
                 android:layout_width="wrap_content"
@@ -90,7 +90,6 @@
                 android:textStyle="bold"
                 android:textColor="?android:attr/textColorPrimary" />
 
-            <!-- 菜单项的 style 已经处理了颜色，无需修改 -->
             <TextView
                 android:id="@+id/interests_button"
                 style="@style/ProfileMenuItem"
@@ -105,14 +104,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/profile_manage_notification" />
 
-            <TextView
-                android:id="@+id/theme_button"
-                style="@style/ProfileMenuItem"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/profile_theme" />
-
-            <!-- Support 部分 -->
+            <!-- Support part -->
             <TextView
                 style="@style/TextAppearance.Material3.TitleMedium"
                 android:layout_width="wrap_content"
@@ -136,7 +128,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/profile_contact_us" />
 
-            <!-- 退出登录部分 -->
+            <!-- Sign out -->
             <LinearLayout
                 android:id="@+id/sign_out_button"
                 android:layout_width="wrap_content"
