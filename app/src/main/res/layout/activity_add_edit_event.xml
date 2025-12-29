@@ -8,11 +8,20 @@
     android:background="@color/app_background"
     tools:context=".AddEditEventActivity">
 
+    <!-- TOP BAR -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar_add_edit_event"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:title="Add_Edit_Event"
+        android:titleTextColor="@color/white"
+        android:background="@color/orange_accent_dark"
+        app:elevation="4dp"/>
+
     <!-- Header -->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="93dp"
-        android:background="@color/orange_accent"
+        android:layout_height="wrap_content"
         android:padding="16dp">
 
         <TextView
