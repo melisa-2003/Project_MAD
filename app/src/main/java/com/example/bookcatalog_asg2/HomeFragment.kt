@@ -6,6 +6,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bookcatalog_asg2.databinding.FragmentHomeBinding
@@ -22,11 +23,30 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private lateinit var categoryAdapter: CategoryAdapter
 
     private val allEvents = mutableListOf<Event>()
+
+    // Filters
     private var selectedCategory = "All"
+    private var filterCategories: List<String> = emptyList()
+    private var filterSort: String = "Relevance"
+
+    // Receive filters from FilterActivity
+    private val filterLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == android.app.Activity.RESULT_OK) {
+                val data = result.data ?: return@registerForActivityResult
+
+                filterCategories =
+                    data.getStringArrayListExtra("FILTER_CATEGORIES") ?: emptyList()
+                filterSort = data.getStringExtra("FILTER_SORT") ?: "Relevance"
+
+                applyFilters()
+            }
+        }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding = FragmentHomeBinding.bind(view)
+        super.onViewCreated(view, savedInstanceState)
 
+        binding = FragmentHomeBinding.bind(view)
         auth = FirebaseAuth.getInstance()
 
         loadUsername()
@@ -56,14 +76,15 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             }
     }
 
-    // ---------------- CATEGORY ----------------
+    // ---------------- CATEGORY CHIPS ----------------
     private fun setupCategoryRecycler() {
         val categories = mutableListOf(
             Category("All", true),
             Category("Event"),
             Category("Workshop"),
             Category("Talk"),
-            Category("Club")
+            Category("Club"),
+            Category("Competition")
         )
 
         categoryAdapter = CategoryAdapter(categories) { categoryName ->
@@ -90,23 +111,25 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     // ---------------- LISTENERS ----------------
     private fun setupListeners() {
-        binding.etSearch.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(
-                s: CharSequence?,
-                start: Int,
-                count: Int,
-                after: Int
-            ) {}
 
-            override fun onTextChanged(
-                s: CharSequence?,
-                start: Int,
-                before: Int,
-                count: Int
-            ) {
+        // Search screen
+        binding.etSearch.setOnClickListener {
+            startActivity(Intent(requireContext(), SearchActivity::class.java))
+        }
+
+        // Filter screen
+        binding.btnFilter.setOnClickListener {
+            filterLauncher.launch(
+                Intent(requireContext(), FilterActivity::class.java)
+            )
+        }
+
+        // Search typing
+        binding.etSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 applyFilters()
             }
-
             override fun afterTextChanged(s: Editable?) {}
         })
     }
@@ -116,7 +139,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         db.collection("events")
             .get()
             .addOnSuccessListener { result ->
-
                 allEvents.clear()
 
                 for (doc in result.documents) {
@@ -126,10 +148,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     }
                 }
 
-                selectedCategory = "All"
-                binding.etSearch.setText("")
-
-                eventAdapter.submitEvents(allEvents)
+                applyFilters()
             }
             .addOnFailureListener {
                 Toast.makeText(
@@ -140,10 +159,25 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             }
     }
 
-    // ---------------- FILTER ----------------
+    // ---------------- APPLY FILTERS ----------------
     private fun applyFilters() {
-        val query = binding.etSearch.text.toString().trim()
-        eventAdapter.filter(selectedCategory, query)
+        val query = binding.etSearch.text.toString().trim().lowercase()
+
+        val filtered = allEvents.filter { event ->
+
+            val matchChipCategory =
+                selectedCategory == "All" || event.category == selectedCategory
+
+            val matchFilterCategory =
+                filterCategories.isEmpty() || filterCategories.contains(event.category)
+
+            val matchSearch =
+                query.isEmpty() || event.title.lowercase().contains(query)
+
+            matchChipCategory && matchFilterCategory && matchSearch
+        }
+
+        // Sort
+        eventAdapter.submitEvents(filtered)
     }
 }
-
