@@ -183,4 +183,7 @@
     <string name="recent_searches">Recent Searches</string>
     <string name="trending_searches">Trending Searches</string>
     <string name="competition">Competition</string>
+    <string name="sign_out_button">Sign Out Button</string>
+    <string name="admin_edit_button">Admin Edit Button</string>
+    <string name="admin_delete_button">Admin delete button</string>
 </resources>

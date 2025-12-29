@@ -6,49 +6,40 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/app_background"
+    android:fitsSystemWindows="true"
     tools:context=".AddEditEventActivity">
 
-    <!-- TOP BAR -->
-    <com.google.android.material.appbar.MaterialToolbar
+    <!-- TOP TOOLBAR (Replaces previous Header) -->
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_add_edit_event"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:title="Add_Edit_Event"
-        android:titleTextColor="@color/white"
+        android:layout_height="80dp"
         android:background="@color/orange_accent_dark"
-        app:elevation="4dp"/>
-
-    <!-- Header -->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp">
+        app:titleTextColor="@color/white"
+        android:elevation="4dp">
 
         <TextView
+            android:id="@+id/tv_toolbar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_gravity="center"
             android:text="@string/create_event"
-            android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:textSize="24sp"
             android:textStyle="bold" />
 
         <ImageButton
             android:id="@+id/backButton"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_centerVertical="true"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="start"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/content_desc_back_button"
             android:scaleType="centerInside"
-            android:src="@drawable/ic_arrow_back_24"
-            app:tint="@color/black" />
-    </RelativeLayout>
+            android:src="@drawable/ic_arrow_back"
+            app:tint="@color/white" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#DDDDDD"/>
+    </androidx.appcompat.widget.Toolbar>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -398,7 +389,7 @@
                     android:layout_marginEnd="8dp"
                     android:text="@string/save"
                     android:textColor="@color/white"
-                    android:backgroundTint="@color/orange_accent"
+                    android:backgroundTint="@color/orange_accent_dark"
                     app:strokeWidth="0dp"
                     style="?android:attr/buttonBarButtonStyle" />
 
@@ -409,21 +400,13 @@
                     android:layout_weight="1"
                     android:layout_marginStart="8dp"
                     android:text="@string/cancel"
-                    android:textColor="@color/white"
-                    android:backgroundTint="@color/orange_accent"
-                    app:strokeWidth="0dp"
+                    android:textColor="@color/black"
+                    android:backgroundTint="#F0F0F0"
                     style="?android:attr/buttonBarButtonStyle" />
-            </LinearLayout>
 
-            <EditText
-                android:id="@+id/inputCost"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:visibility="gone"
-                android:autofillHints="none"
-                android:inputType="numberDecimal"
-                tools:ignore="MissingConstraints" />
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
+
 </LinearLayout>

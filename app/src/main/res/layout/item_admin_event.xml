@@ -78,11 +78,12 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/admin_edit_button"
             android:padding="4dp"
             android:src="@android:drawable/ic_menu_edit"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="@android:color/black" />
+            app:tint="@android:color/holo_blue_dark" />
 
         <ImageView
             android:id="@+id/iv_admin_delete"
@@ -90,12 +91,13 @@
             android:layout_height="32dp"
             android:layout_marginTop="4dp"
             android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/admin_delete_button"
             android:padding="4dp"
             android:src="@android:drawable/ic_menu_delete"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_admin_edit"
-            app:tint="@android:color/black" />
+            app:tint="@android:color/holo_red_dark" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
