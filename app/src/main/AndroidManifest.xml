@@ -36,6 +36,16 @@
             android:name=".MainActivity"
             android:exported="false" />
 
+        <!-- Search -->
+        <activity
+            android:name=".SearchActivity"
+            android:exported="false" />
+
+        <!-- Filter -->
+        <activity
+            android:name=".FilterActivity"
+            android:exported="false" />
+
         <!-- FORGOT PASSWORD -->
         <activity
             android:name=".ForgotPasswordActivity"
