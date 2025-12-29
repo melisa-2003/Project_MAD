@@ -48,6 +48,11 @@
             android:name=".FilterActivity"
             android:exported="false" />
 
+        <!-- Notification -->
+        <activity
+            android:name=".NotificationActivity"
+            android:exported="false" />
+
         <!-- FORGOT PASSWORD -->
         <activity
             android:name=".ForgotPasswordActivity"
