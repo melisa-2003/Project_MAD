@@ -1,12 +1,15 @@
 package com.example.bookcatalog_asg2
 
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 
 class EventListActivity : AppCompatActivity() {
 
@@ -17,6 +20,29 @@ class EventListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_event_list)
+
+        // 1️⃣ 绑定 Toolbar
+        val toolbar = findViewById<com.google.android.material.appbar.MaterialToolbar>(
+            R.id.toolbar_event_list
+        )
+        setSupportActionBar(toolbar)
+
+        ViewCompat.setOnApplyWindowInsetsListener(toolbar) { v, insets ->
+            val statusBarHeight = insets.getInsets(
+                WindowInsetsCompat.Type.statusBars()
+            ).top
+
+            v.setPadding(
+                v.paddingLeft,
+                statusBarHeight, // 👈 这里 16px，不是 dp
+                v.paddingRight,
+                v.paddingBottom
+            )
+            insets
+        }
+
+        // 显示返回键
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         recyclerView = findViewById(R.id.rv_event_list)
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -37,6 +63,16 @@ class EventListActivity : AppCompatActivity() {
 
         // 加载 Firestore 数据
         loadEvents(type)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                finish() // 👈 返回 DiscoverFragment
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun loadEvents(type: String) {

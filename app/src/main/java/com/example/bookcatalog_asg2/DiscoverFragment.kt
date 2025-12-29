@@ -12,6 +12,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import android.widget.TextView
 import com.google.android.material.appbar.MaterialToolbar
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 
 class DiscoverFragment : Fragment() {
 
@@ -42,7 +44,21 @@ class DiscoverFragment : Fragment() {
         val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar_discover)
 
         toolbar.title = "Discover"
-        toolbar.setTitleTextColor(androidx.core.content.ContextCompat.getColor(requireContext(), android.R.color.white))
+        // 处理状态栏，保持 toolbar 内容垂直居中
+        ViewCompat.setOnApplyWindowInsetsListener(toolbar) { v, insets ->
+            val statusBarHeight = insets.getInsets(
+                WindowInsetsCompat.Type.statusBars()
+            ).top
+
+            // 只调整顶部 padding 来避开状态栏
+            v.setPadding(
+                v.paddingLeft,
+                statusBarHeight,
+                v.paddingRight,
+                v.paddingBottom
+            )
+            insets
+        }
 
         rvFeatured.adapter = featuredAdapter
         rvTrending.adapter = trendingAdapter

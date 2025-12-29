@@ -1,156 +1,151 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/app_background">
 
-    <LinearLayout
+    <!-- TOP BAR -->
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@color/app_background">
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.Material3.Dark.ActionBar">
 
-        <!-- TOP BAR -->
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar_discover"
             android:layout_width="match_parent"
-            android:layout_height="72dp"
+            android:layout_height="80dp"
             android:background="@color/orange_accent_dark"
-            android:paddingTop="20dp"
-            android:paddingBottom="20dp"
-            android:title="Discover"
-            android:titleTextColor="@color/white"
-            app:elevation="4dp" />
+            app:titleTextColor="@color/white"
+            app:titleTextAppearance="@style/ToolbarTitleText"/>
+    </com.google.android.material.appbar.AppBarLayout>
 
-        <!-- CONTENT -->
-        <androidx.core.widget.NestedScrollView
+    <!-- CONTENT -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:text="Explore Nearby Events"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"/>
 
+
+            <!-- FEATURED -->
+            <LinearLayout
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:text="Featured Events"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Explore Nearby Events"
-                    android:textSize="25sp"
-                    android:textStyle="bold"
-                    android:textColor="@android:color/black"/>
-
-
-                <!-- FEATURED -->
-                <LinearLayout
-                    android:layout_marginTop="20dp"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:text="Featured Events"
-                        android:textStyle="bold"
-                        android:textSize="18sp"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/btn_view_more_featured"
-                        android:text="View More"
-                        android:drawableEnd="@drawable/ic_arrow_right"
-                        android:drawablePadding="2dp"
-                        android:textColor="@color/orange_accent"
-                        android:textSize="16sp"
-                        android:padding="8dp"/>
-
-                </LinearLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_featured"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="8dp"/>
-
-                <!-- TRENDING -->
-                <LinearLayout
-                    android:layout_marginTop="24dp"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:text="Trending Now"
-                        android:textStyle="bold"
-                        android:textSize="18sp"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/btn_view_more_trending"
-                        android:text="View More"
-                        android:drawableEnd="@drawable/ic_arrow_right"
-                        android:drawablePadding="2dp"
-                        android:textColor="@color/orange_accent"
-                        android:textSize="16sp"
-                        android:padding="8dp"/>
-                </LinearLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_trending"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="8dp"/>
-
-                <!-- RECOMMENDED -->
-                <LinearLayout
-                    android:layout_marginTop="24dp"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:text="Recommend For You"
-                        android:textStyle="bold"
-                        android:textSize="18sp"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/btn_view_more_recommend"
-                        android:text="View More"
-                        android:drawableEnd="@drawable/ic_arrow_right"
-                        android:drawablePadding="2dp"
-                        android:textColor="@color/orange_accent"
-                        android:textSize="16sp"
-                        android:padding="8dp"/>
-
-                </LinearLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_recommend"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="8dp"/>
+                    android:id="@+id/btn_view_more_featured"
+                    android:text="View More"
+                    android:drawableEnd="@drawable/ic_arrow_right_orange"
+                    android:drawablePadding="2dp"
+                    android:textColor="@color/orange_accent"
+                    android:textSize="16sp"
+                    android:padding="8dp"/>
 
             </LinearLayout>
 
-        </androidx.core.widget.NestedScrollView>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_featured"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="8dp"/>
 
-    </LinearLayout>
+            <!-- TRENDING -->
+            <LinearLayout
+                android:layout_marginTop="24dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-</ScrollView>
+                <TextView
+                    android:text="Trending Now"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/btn_view_more_trending"
+                    android:text="View More"
+                    android:drawableEnd="@drawable/ic_arrow_right_orange"
+                    android:drawablePadding="2dp"
+                    android:textColor="@color/orange_accent"
+                    android:textSize="16sp"
+                    android:padding="8dp"/>
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_trending"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="8dp"/>
+
+            <!-- RECOMMENDED -->
+            <LinearLayout
+                android:layout_marginTop="24dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:text="Recommend For You"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/btn_view_more_recommend"
+                    android:text="View More"
+                    android:drawableEnd="@drawable/ic_arrow_right_orange"
+                    android:drawablePadding="2dp"
+                    android:textColor="@color/orange_accent"
+                    android:textSize="16sp"
+                    android:padding="8dp"/>
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_recommend"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="8dp"/>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
