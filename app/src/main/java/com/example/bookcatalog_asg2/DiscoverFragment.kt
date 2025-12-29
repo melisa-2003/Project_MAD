@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import android.widget.TextView
+import com.google.android.material.appbar.MaterialToolbar
 
 class DiscoverFragment : Fragment() {
 
@@ -37,6 +38,11 @@ class DiscoverFragment : Fragment() {
         val featuredAdapter = EventAdapter { openDetails(it) }
         val trendingAdapter = EventAdapter { openDetails(it) }
         val recommendAdapter = EventAdapter { openDetails(it) }
+
+        val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar_discover)
+
+        toolbar.title = "Discover"
+        toolbar.setTitleTextColor(resources.getColor(android.R.color.white))
 
         rvFeatured.adapter = featuredAdapter
         rvTrending.adapter = trendingAdapter
