@@ -12,10 +12,11 @@
         android:id="@+id/toolbar_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:title="Search"
+        android:title="@string/search"
         android:titleTextColor="@color/white"
         android:background="@color/orange_accent_dark"
-        app:elevation="4dp"/>
+        app:elevation="4dp"
+        tools:ignore="MissingConstraints" />
 
     <!-- Top Guideline -->
     <androidx.constraintlayout.widget.Guideline
