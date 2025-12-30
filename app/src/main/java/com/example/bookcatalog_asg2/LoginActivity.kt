@@ -1,5 +1,6 @@
 package com.example.bookcatalog_asg2
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -32,14 +33,8 @@ class LoginActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // ALLOW ONLY ADMIN OR STUDENT EMAIL DOMAINS
             if (!isAllowedEmail(email)) {
-                Toast.makeText(
-                    this,
-                    "Invalid email",
-                    Toast.LENGTH_LONG
-                ).show()
-
+                Toast.makeText(this, "Invalid email", Toast.LENGTH_LONG).show()
                 binding.email.text?.clear()
                 binding.email.requestFocus()
                 return@setOnClickListener
@@ -56,17 +51,9 @@ class LoginActivity : AppCompatActivity() {
                     } else {
                         val exception = task.exception
                         if (exception is FirebaseAuthInvalidUserException) {
-                            Toast.makeText(
-                                this,
-                                "Account not found. Please sign up.",
-                                Toast.LENGTH_LONG
-                            ).show()
+                            Toast.makeText(this, "Account not found. Please sign up.", Toast.LENGTH_LONG).show()
                         } else {
-                            Toast.makeText(
-                                this,
-                                "Invalid email or password.",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            Toast.makeText(this, "Invalid email or password.", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
@@ -83,12 +70,10 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    // EMAIL DOMAIN VALIDATION
     private fun isAllowedEmail(email: String): Boolean {
         return email.endsWith("@admin.uni.my") || email.endsWith("@siswa.uni.my")
     }
 
-    // ROLE CHECK
     private fun checkUserRole() {
         val user = auth.currentUser ?: return
         val uid = user.uid
@@ -109,11 +94,7 @@ class LoginActivity : AppCompatActivity() {
             .addOnSuccessListener { doc ->
                 com.google.firebase.messaging.FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
                     if (!task.isSuccessful) {
-                        android.util.Log.w(
-                            "FCM",
-                            "Fetching FCM registration token failed",
-                            task.exception
-                        )
+                        android.util.Log.w("FCM", "Fetching FCM registration token failed", task.exception)
                         proceedToNextActivity(role, uid, email, doc)
                         return@addOnCompleteListener
                     }
@@ -123,7 +104,6 @@ class LoginActivity : AppCompatActivity() {
                     if (token != null) {
                         val userDataWithToken = mapOf("fcmToken" to token)
                         db.collection("users").document(uid)
-
                             .update(userDataWithToken)
                             .addOnSuccessListener {
                                 android.util.Log.d("FCM", "Token updated on login.")
@@ -134,7 +114,6 @@ class LoginActivity : AppCompatActivity() {
                                 proceedToNextActivity(role, uid, email, doc)
                             }
                     } else {
-                        // Token as null，direct proceed login
                         proceedToNextActivity(role, uid, email, doc)
                     }
                 }
@@ -159,9 +138,10 @@ class LoginActivity : AppCompatActivity() {
             db.collection("users").document(uid).set(userData)
         }
 
-        // *** 新增：启动后台监听服务 ***
-        Intent(this, FirestoreListenerService::class.java).also { intent ->
-            startService(intent)
+        // Set the notification badge count to 1 on every successful login for non-admins
+        if (role != "admin") {
+            val sharedPref = getSharedPreferences("app_notifications", Context.MODE_PRIVATE)
+            sharedPref.edit().putInt("badge_count", 1).apply()
         }
 
         val intent = if (role == "admin") {

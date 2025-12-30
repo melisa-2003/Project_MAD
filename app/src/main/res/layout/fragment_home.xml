@@ -38,13 +38,13 @@
         app:layout_constraintBottom_toBottomOf="@+id/tv_greeting">
 
         <ImageView
-            android:id="@+id/ivNotifications"
+            android:id="@+id/iv_notifications"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_gravity="center"
-            android:padding="4dp"
             android:src="@drawable/notification"
             android:contentDescription="@string/notifications"/>
+
     </FrameLayout>
 
     <!-- Search + Filter -->

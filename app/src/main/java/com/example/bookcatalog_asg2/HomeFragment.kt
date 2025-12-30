@@ -2,7 +2,6 @@ package com.example.bookcatalog_asg2
 
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -20,6 +19,7 @@ import com.google.android.material.badge.BadgeUtils
 import com.google.android.material.badge.ExperimentalBadgeUtils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import androidx.core.content.edit
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
@@ -37,18 +37,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private var filterCategories: List<String> = emptyList()
     private var filterSort: String = "Relevance"
 
-    private var sharedPreferences: SharedPreferences? = null
-    // 2. 添加一个监听器，用于在后台计数值变化时刷新UI
-    private val preferenceChangeListener =
-        SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
-            if (key == "badge_count") {
-                activity?.runOnUiThread {
-                    setupNotificationBadge()
-                }
-            }
-        }
-
-    // Receive filters from FilterActivity
     private val filterLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == android.app.Activity.RESULT_OK) {
@@ -73,20 +61,16 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         setupEventRecycler()
         setupListeners()
         loadEventsFromFirestore()
+        // Call setupNotificationBadge() here to ensure it runs when the view is first created
         setupNotificationBadge()
-
-        // 3. 注册监听器
-        sharedPreferences = activity?.getSharedPreferences("app_notifications", Context.MODE_PRIVATE)
-        sharedPreferences?.registerOnSharedPreferenceChangeListener(preferenceChangeListener)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        // 4. 注销监听器，防止内存泄漏
-        sharedPreferences?.unregisterOnSharedPreferenceChangeListener(preferenceChangeListener)
+    override fun onResume() {
+        super.onResume()
+        // Also call it here to refresh the badge when the user returns to the screen
+        setupNotificationBadge()
     }
 
-    // ---------------- LOAD USERNAME ----------------
     private fun loadUsername() {
         val currentUser = auth.currentUser ?: return
 
@@ -106,7 +90,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             }
     }
 
-    // ---------------- CATEGORY CHIPS ----------------
     private fun setupCategoryRecycler() {
         val categories = mutableListOf(
             Category("All", true),
@@ -127,7 +110,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding.rvCategories.adapter = categoryAdapter
     }
 
-    // ---------------- EVENTS ----------------
     private fun setupEventRecycler() {
         eventAdapter = EventAdapter { event ->
             val intent = Intent(requireContext(), EventDetailsActivity::class.java)
@@ -139,29 +121,36 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding.rvEvents.adapter = eventAdapter
     }
 
-    // ---------------- LISTENERS ----------------
     @OptIn(ExperimentalBadgeUtils::class)
     private fun setupListeners() {
 
-        // Search screen
         binding.etSearch.setOnClickListener {
             startActivity(Intent(requireContext(), SearchActivity::class.java))
         }
 
-        // Filter screen
         binding.btnFilter.setOnClickListener {
             filterLauncher.launch(
                 Intent(requireContext(), FilterActivity::class.java)
             )
         }
 
-        // Notification
         binding.notificationContainer.setOnClickListener {
-            FirestoreListenerService.resetBadgeCount(requireContext())
-            BadgeUtils.detachBadgeDrawable(null, binding.notificationContainer)
+            // 1. 获取 SharedPreferences
+            val sharedPref = requireActivity().getSharedPreferences("app_notifications", Context.MODE_PRIVATE)
+
+            // 2. 将后台的角标计数值清零
+            sharedPref.edit { // 使用已有的 anko 扩展函数
+                putInt("badge_count", 0)
+            }
+
+            // 3. 立即调用我们的函数来更新UI（它会发现计数值为0并移除红点）
+            setupNotificationBadge()
+
+            // 4. 跳转到通知页面
             startActivity(Intent(requireContext(), NotificationActivity::class.java))
         }
-        // Search typing
+
+
         binding.etSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -171,7 +160,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         })
     }
 
-    // ---------------- FIRESTORE ----------------
     private fun loadEventsFromFirestore() {
         db.collection("events")
             .get()
@@ -196,7 +184,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             }
     }
 
-    // ---------------- APPLY FILTERS ----------------
     private fun applyFilters() {
         val query = binding.etSearch.text.toString().trim().lowercase()
 
@@ -214,43 +201,43 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             matchChipCategory && matchFilterCategory && matchSearch
         }
 
-        // Sort
         eventAdapter.submitEvents(filtered)
     }
 
-    // ---------------- Notification Badge ----------------
     @OptIn(ExperimentalBadgeUtils::class)
     private fun setupNotificationBadge() {
+        // i & ii. 获取 SharedPreferences 和 badge_count 值
         val sharedPref = activity?.getSharedPreferences("app_notifications", Context.MODE_PRIVATE) ?: return
-
-        // 1. 直接从 SharedPreferences 读取计数值
         val badgeCount = sharedPref.getInt("badge_count", 0)
-        Log.d("HomeFragment", "setupNotificationBadge called. Current badge count from Prefs: $badgeCount")
 
-        val badgeContainer = binding.notificationContainer
-        // 无论如何，先移除旧的角标，防止重叠
-        BadgeUtils.detachBadgeDrawable(null, badgeContainer)
+        Log.d("HomeFragment", "setupNotificationBadge called. Badge count: $badgeCount")
 
-        // 2. 如果计数值大于0，就创建并显示新的角标
+        val anchor = binding.ivNotifications
+
+        // 每次更新前，都先移除旧的角标，防止重复绘制
+        BadgeUtils.detachBadgeDrawable(null, anchor)
+
+        // iii. 判断 badge_count 是否大于 0
         if (badgeCount > 0) {
+            // iv. 如果大于0，则创建并显示红点
+            Log.d("HomeFragment", "Badge count is > 0, showing badge.")
+
+            // 创建一个新的 BadgeDrawable
             val badge = BadgeDrawable.create(requireContext())
-            badge.number = badgeCount
+
+            // 设置颜色为红色
             badge.backgroundColor = ContextCompat.getColor(requireContext(), R.color.red)
+            // 设置位置在右上角
+            badge.badgeGravity = BadgeDrawable.TOP_END
 
-            BadgeUtils.attachBadgeDrawable(badge, badgeContainer)
+            // 微调位置以获得更好的视觉效果 (可以根据你的图标调整这些值)
+            badge.verticalOffset = 5    // 向下移动 5dp
+            badge.horizontalOffset = 5  // 向右移动 5dp
 
-            // 使用 post 来确保在布局完成后再调整位置
-            badgeContainer.post {
-                badge.badgeGravity = BadgeDrawable.TOP_START
-
-                // 您的位置调整代码
-                val horizontalOffset = (badgeContainer.width / 2) + (binding.ivNotifications.width / 2) - (badge.intrinsicWidth / 2) - 4
-                val verticalOffset = (badgeContainer.height / 2) - (binding.ivNotifications.height / 2) + 16
-
-                badge.horizontalOffset = horizontalOffset
-                badge.verticalOffset = verticalOffset
-            }
+            // 最后，将角标附加到你的 ImageView 上
+            BadgeUtils.attachBadgeDrawable(badge, anchor)
         } else {
+            // 如果 badge_count 为 0，detach 已经执行，无需额外操作
             Log.d("HomeFragment", "Badge count is 0, no badge will be shown.")
         }
     }

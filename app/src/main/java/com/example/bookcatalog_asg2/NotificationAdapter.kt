@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 
 class NotificationAdapter(
-    private val onItemClick: (Event) -> Unit
 ) : ListAdapter<NotificationItem, RecyclerView.ViewHolder>(DiffCallback()) {
 
     // --- ViewHolder ---
@@ -52,10 +51,6 @@ class NotificationAdapter(
                 val eventViewHolder = holder as EventViewHolder
                 val event = item.event
                 eventViewHolder.bind(event)
-
-                eventViewHolder.itemView.setOnClickListener {
-                    onItemClick(event)
-                }
             }
         }
     }
@@ -73,10 +68,12 @@ class NotificationAdapter(
     class EventViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val tvTitle: TextView = view.findViewById(R.id.tvTitle)
         private val tvMessage: TextView = view.findViewById(R.id.tvMessage)
+        private val tvDate: TextView = view.findViewById(R.id.tvDate)
 
         fun bind(event: Event) {
             tvTitle.text = event.title
-            tvMessage.text = event.dateTime
+            tvMessage.text = ""
+            tvDate.text = event.dateTime
         }
     }
 
@@ -103,8 +100,3 @@ class NotificationAdapter(
         }
     }
 }
-
-
-
-
-
