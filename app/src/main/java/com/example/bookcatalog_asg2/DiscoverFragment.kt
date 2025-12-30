@@ -43,23 +43,6 @@ class DiscoverFragment : Fragment() {
 
         val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar_discover)
 
-        toolbar.title = "Discover"
-        // 处理状态栏，保持 toolbar 内容垂直居中
-        ViewCompat.setOnApplyWindowInsetsListener(toolbar) { v, insets ->
-            val statusBarHeight = insets.getInsets(
-                WindowInsetsCompat.Type.statusBars()
-            ).top
-
-            // 只调整顶部 padding 来避开状态栏
-            v.setPadding(
-                v.paddingLeft,
-                statusBarHeight,
-                v.paddingRight,
-                v.paddingBottom
-            )
-            insets
-        }
-
         rvFeatured.adapter = featuredAdapter
         rvTrending.adapter = trendingAdapter
         rvRecommend.adapter = recommendAdapter
