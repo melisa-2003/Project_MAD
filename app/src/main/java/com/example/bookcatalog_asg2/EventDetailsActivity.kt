@@ -237,7 +237,7 @@ class EventDetailsActivity : AppCompatActivity() {
         }
 
         try {
-            val format = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
+            val format = SimpleDateFormat("yyyy-MM-dd hh:mm a", Locale.getDefault())
             val startDate = format.parse(dateTime) ?: return
             val startMillis = startDate.time
             val endMillis = startMillis + 60 * 60 * 1000 // 1 hour
