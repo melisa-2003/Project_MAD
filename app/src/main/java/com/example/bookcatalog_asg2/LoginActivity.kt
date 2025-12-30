@@ -107,26 +107,70 @@ class LoginActivity : AppCompatActivity() {
         db.collection("users").document(uid)
             .get()
             .addOnSuccessListener { doc ->
-                if (!doc.exists()) {
-                    val userData = mapOf(
-                        "email" to email,
-                        "role" to role
-                    )
-                    db.collection("users").document(uid).set(userData)
-                }
+                com.google.firebase.messaging.FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+                    if (!task.isSuccessful) {
+                        android.util.Log.w(
+                            "FCM",
+                            "Fetching FCM registration token failed",
+                            task.exception
+                        )
+                        proceedToNextActivity(role, uid, email, doc)
+                        return@addOnCompleteListener
+                    }
 
-                val intent = if (role == "admin") {
-                    Intent(this, AdminActivity::class.java)
-                } else {
-                    Intent(this, MainActivity::class.java)
-                }
+                    val token = task.result
 
-                startActivity(intent)
-                finish()
+                    if (token != null) {
+                        val userDataWithToken = mapOf("fcmToken" to token)
+                        db.collection("users").document(uid)
+
+                            .update(userDataWithToken)
+                            .addOnSuccessListener {
+                                android.util.Log.d("FCM", "Token updated on login.")
+                                proceedToNextActivity(role, uid, email, doc)
+                            }
+                            .addOnFailureListener {
+                                android.util.Log.e("FCM", "Failed to update token.", it)
+                                proceedToNextActivity(role, uid, email, doc)
+                            }
+                    } else {
+                        // Token as null，direct proceed login
+                        proceedToNextActivity(role, uid, email, doc)
+                    }
+                }
             }
             .addOnFailureListener {
                 Toast.makeText(this, "Failed to load user account.", Toast.LENGTH_SHORT).show()
                 auth.signOut()
             }
+    }
+
+    private fun proceedToNextActivity(
+        role: String,
+        uid: String,
+        email: String,
+        doc: com.google.firebase.firestore.DocumentSnapshot
+    ) {
+        if (!doc.exists()) {
+            val userData = mapOf(
+                "email" to email,
+                "role" to role
+            )
+            db.collection("users").document(uid).set(userData)
+        }
+
+        // *** 新增：启动后台监听服务 ***
+        Intent(this, FirestoreListenerService::class.java).also { intent ->
+            startService(intent)
+        }
+
+        val intent = if (role == "admin") {
+            Intent(this, AdminActivity::class.java)
+        } else {
+            Intent(this, MainActivity::class.java)
+        }
+
+        startActivity(intent)
+        finish()
     }
 }

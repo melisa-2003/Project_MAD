@@ -7,6 +7,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.google.firebase.firestore.FirebaseFirestore
+import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
@@ -28,6 +29,7 @@ class AddEditEventActivity : AppCompatActivity() {
 
     private var eventId: String? = null
     private var selectedCategory = "Event"
+    private val selectedDateTime = Calendar.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -96,42 +98,40 @@ class AddEditEventActivity : AppCompatActivity() {
 
     // ---------------- DATE PICKER ----------------
     private fun showDatePicker() {
-        val calendar = Calendar.getInstance()
         DatePickerDialog(
             this,
             { _, year, month, day ->
-                val date = String.format(
-                    Locale.getDefault(),
-                    "%02d/%02d/%04d",
-                    day,
-                    month + 1,
-                    year
-                )
-                dateInput.setText(date)
+                // 3. 更新 Calendar 实例，而不是直接格式化字符串
+                selectedDateTime.set(Calendar.YEAR, year)
+                selectedDateTime.set(Calendar.MONTH, month)
+                selectedDateTime.set(Calendar.DAY_OF_MONTH, day)
+
+                // 更新UI让用户看到 (这里的格式仅用于显示，不影响最终保存)
+                val displayFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+                dateInput.setText(displayFormat.format(selectedDateTime.time))
             },
-            calendar.get(Calendar.YEAR),
-            calendar.get(Calendar.MONTH),
-            calendar.get(Calendar.DAY_OF_MONTH)
+            selectedDateTime.get(Calendar.YEAR),
+            selectedDateTime.get(Calendar.MONTH),
+            selectedDateTime.get(Calendar.DAY_OF_MONTH)
         ).show()
     }
 
     // ---------------- TIME PICKER ----------------
     private fun showTimePicker() {
-        val calendar = Calendar.getInstance()
         TimePickerDialog(
             this,
             { _, hour, minute ->
-                val time = String.format(
-                    Locale.getDefault(),
-                    "%02d:%02d",
-                    hour,
-                    minute
-                )
-                timeInput.setText(time)
+                // 4. 更新 Calendar 实例
+                selectedDateTime.set(Calendar.HOUR_OF_DAY, hour)
+                selectedDateTime.set(Calendar.MINUTE, minute)
+
+                // 更新UI让用户看到 (这里的格式仅用于显示，不影响最终保存)
+                val displayFormat = SimpleDateFormat("hh:mm a", Locale.US) // 12小时制 + AM/PM
+                timeInput.setText(displayFormat.format(selectedDateTime.time))
             },
-            calendar.get(Calendar.HOUR_OF_DAY),
-            calendar.get(Calendar.MINUTE),
-            true
+            selectedDateTime.get(Calendar.HOUR_OF_DAY),
+            selectedDateTime.get(Calendar.MINUTE),
+            false // 改为 false 来使用支持 AM/PM 的12小时制选择器
         ).show()
     }
 
@@ -194,15 +194,27 @@ class AddEditEventActivity : AppCompatActivity() {
         val overview = overviewInput.text.toString().trim()
         val highlights = highlightsInput.text.toString().trim()
         val imageUrl = imageRefInput.text.toString().trim()
+        val adminUid = intent.getStringExtra("ADMIN_UID")
 
         if (title.isEmpty() || date.isEmpty() || time.isEmpty()) {
             Toast.makeText(this, "Title, date and time are required", Toast.LENGTH_SHORT).show()
             return
         }
 
+        if (adminUid.isNullOrBlank()) {
+            Toast.makeText(this, "Error: Admin User ID is missing. Cannot save.", Toast.LENGTH_LONG)
+                .show()
+            return
+        }
+
+        // 5. 关键修复：在这里创建与后台服务完全一致的格式化工具
+        val firestoreFormat = SimpleDateFormat("yyyy-MM-dd hh:mm a", Locale.US)
+        // 从我们一直维护的 Calendar 实例中获取 Date 对象，然后格式化为正确的字符串
+        val finalDateTimeString = firestoreFormat.format(selectedDateTime.time)
+
         val eventData = hashMapOf(
             "title" to title,
-            "dateTime" to "$date $time",
+            "dateTime" to finalDateTimeString,
             "venue" to venue,
             "organizerName" to organizer,
             "overview" to overview,
@@ -211,19 +223,40 @@ class AddEditEventActivity : AppCompatActivity() {
             "imageRef" to imageUrl,
 
             "featured" to false,
-            "viewCount" to 0L
+            "viewCount" to 0L,
+            "createdBy" to adminUid
         )
+
+        if (eventId != null) {
+            eventData.remove("viewCount")
+            eventData.remove("featured")
+        }
 
         val collection = db.collection("events")
 
         if (eventId == null) {
+            // 创建新活动
             collection.add(eventData)
-                .addOnSuccessListener { finish() }
+                .addOnSuccessListener {
+                    Toast.makeText(this, "Event added successfully", Toast.LENGTH_SHORT).show()
+                    finish()
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(this, "Error adding event: ${e.message}", Toast.LENGTH_SHORT)
+                        .show()
+                }
         } else {
+            // 更新现有活动
             collection.document(eventId!!)
                 .update(eventData as Map<String, Any>)
-                .addOnSuccessListener { finish() }
+                .addOnSuccessListener {
+                    Toast.makeText(this, "Event updated successfully", Toast.LENGTH_SHORT).show()
+                    finish()
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(this, "Error updating event: ${e.message}", Toast.LENGTH_SHORT)
+                        .show()
+                }
         }
     }
 }
-

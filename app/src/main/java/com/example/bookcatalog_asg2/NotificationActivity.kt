@@ -8,16 +8,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import java.time.format.DateTimeParseException
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class NotificationActivity : AppCompatActivity() {
 
     private lateinit var adapter: NotificationAdapter
     private val db = FirebaseFirestore.getInstance()
-
-    private val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")
+    private val firestoreFormatter = SimpleDateFormat("yyyy-MM-dd hh:mm a", Locale.US)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,26 +25,31 @@ class NotificationActivity : AppCompatActivity() {
         val backButton = findViewById<ImageButton>(R.id.backButton)
         val rv = findViewById<RecyclerView>(R.id.rv_notifications)
 
-        // Custom back button → Home
-        backButton.setOnClickListener {
-            goToHome()
-        }
-
-        // System back gesture / hardware back → Home
-        onBackPressedDispatcher.addCallback(
-            this,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    goToHome()
-                }
+        backButton.setOnClickListener { goToHome() }
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                goToHome()
             }
-        )
+        })
 
-        adapter = NotificationAdapter()
+        // 1. 在这里初始化 Adapter
+        adapter = NotificationAdapter { event ->
+            handleEventClick(event)
+        }
         rv.layoutManager = LinearLayoutManager(this)
         rv.adapter = adapter
+    }
 
+    override fun onResume() {
+        super.onResume()
+        // 每次返回页面都刷新数据
         loadAllEvents()
+    }
+
+    private fun handleEventClick(event: Event) {
+        val intent = Intent(this, EventDetailsActivity::class.java)
+        intent.putExtra("EVENT_ID", event.id)
+        startActivity(intent)
     }
 
     private fun goToHome() {
@@ -59,22 +63,25 @@ class NotificationActivity : AppCompatActivity() {
         db.collection("events")
             .get()
             .addOnSuccessListener { result ->
-
-                val now = LocalDateTime.now()
+                val now = Date()
                 val upcoming = mutableListOf<Event>()
                 val recent = mutableListOf<Event>()
 
                 result.documents.forEach { doc ->
+                    // 2. toObject 会因为 @PropertyName 正确映射 "dayTime"
                     val event = doc.toObject(Event::class.java)
                         ?.copy(id = doc.id) ?: return@forEach
 
-                    val eventDateTime = try {
-                        LocalDateTime.parse(event.dateTime, formatter)
-                    } catch (_: DateTimeParseException) {
+                    val eventDate = try {
+                        firestoreFormatter.parse(event.dateTime)
+                    } catch (_: Exception) {
                         return@forEach
                     }
 
-                    if (eventDateTime.isAfter(now) || eventDateTime.isEqual(now)) {
+                    if (eventDate == null) return@forEach
+
+                    // 过去的日期放在 "Recent"
+                    if (eventDate.after(now)) {
                         upcoming.add(event)
                     } else {
                         recent.add(event)
@@ -85,27 +92,22 @@ class NotificationActivity : AppCompatActivity() {
 
                 if (upcoming.isNotEmpty()) {
                     finalList.add(NotificationItem.Header("Upcoming"))
-                    upcoming.sortedBy {
-                        LocalDateTime.parse(it.dateTime, formatter)
-                    }.forEach {
-                        finalList.add(NotificationItem.EventItem(it))
-                    }
+                    val sortedUpcoming = upcoming.sortedBy { firestoreFormatter.parse(it.dateTime) }
+                    sortedUpcoming.forEach { finalList.add(NotificationItem.EventItem(it)) }
                 }
 
                 if (recent.isNotEmpty()) {
                     finalList.add(NotificationItem.Header("Recent"))
-                    recent.sortedByDescending {
-                        LocalDateTime.parse(it.dateTime, formatter)
-                    }.forEach {
-                        finalList.add(NotificationItem.EventItem(it))
-                    }
+                    val sortedRecent = recent.sortedByDescending { firestoreFormatter.parse(it.dateTime) }
+                    sortedRecent.forEach { finalList.add(NotificationItem.EventItem(it)) }
                 }
 
                 adapter.submitList(finalList)
             }
+            .addOnFailureListener {
+                // Handle error
+            }
     }
 }
-
-
 
 

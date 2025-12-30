@@ -41,8 +41,11 @@ class AdminActivity : AppCompatActivity() {
         adapter = AdminEventAdapter(
             events = eventList,
             onEditClick = { event ->
+                // *** 修改这里 ***
                 val intent = Intent(this, AddEditEventActivity::class.java)
                 intent.putExtra("EVENT_ID", event.id)
+                // 同样，也将当前 Admin 的 UID 传递过去
+                intent.putExtra("ADMIN_UID", auth.currentUser?.uid)
                 startActivity(intent)
             },
             onDeleteClick = { event ->
@@ -53,11 +56,14 @@ class AdminActivity : AppCompatActivity() {
         binding.rvAdminEvents.layoutManager = LinearLayoutManager(this)
         binding.rvAdminEvents.adapter = adapter
     }
-
     // ---------------- LISTENERS ----------------
     private fun setupListeners() {
         binding.fabAddEvent.setOnClickListener {
-            startActivity(Intent(this, AddEditEventActivity::class.java))
+            // *** 修改这里 ***
+            val intent = Intent(this, AddEditEventActivity::class.java)
+            // 将当前 Admin 的 UID 传递给下一个 Activity
+            intent.putExtra("ADMIN_UID", auth.currentUser?.uid)
+            startActivity(intent)
         }
     }
 

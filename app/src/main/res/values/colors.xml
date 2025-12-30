@@ -9,5 +9,6 @@
     <color name="app_background">#f2f3f5</color>
     <color name="blue">#2D5EC2</color>
     <color name="light_grey">#A8AAAd</color>
+    <color name="red">#FF0000</color>
 
 </resources>
