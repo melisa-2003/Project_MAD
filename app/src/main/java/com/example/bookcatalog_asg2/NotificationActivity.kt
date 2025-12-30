@@ -74,7 +74,7 @@ class NotificationActivity : AppCompatActivity() {
                     
                     val eventDate = try {
                         firestoreFormatter.parse(event.dateTime)
-                    } catch (e: Exception) {
+                    } catch (_: Exception) {
                         null
                     }
 

@@ -9,6 +9,7 @@ import com.example.bookcatalog_asg2.databinding.ActivityLoginBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.firestore.FirebaseFirestore
+import androidx.core.content.edit
 
 class LoginActivity : AppCompatActivity() {
 
@@ -140,8 +141,8 @@ class LoginActivity : AppCompatActivity() {
 
         // Set the notification badge count to 1 on every successful login for non-admins
         if (role != "admin") {
-            val sharedPref = getSharedPreferences("app_notifications", Context.MODE_PRIVATE)
-            sharedPref.edit().putInt("badge_count", 1).apply()
+            val sharedPref = getSharedPreferences("app_notifications", MODE_PRIVATE)
+            sharedPref.edit { putInt("badge_count", 1) }
         }
 
         val intent = if (role == "admin") {
