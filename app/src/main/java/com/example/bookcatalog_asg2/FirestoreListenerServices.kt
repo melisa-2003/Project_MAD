@@ -148,7 +148,7 @@ class FirestoreListenerService : Service() {
         // We don't need a role check if we are already skipping the creator.
         // Students will get the notification, and admins won't get it for events they create.
         Log.d("FirestoreListener", "User is not the creator. Updating badge and sending notification.")
-        updateBadgeCount(1)
+        incrementBadgeCount()
         sendNewEventNotification(event)
     }
 
@@ -163,12 +163,12 @@ class FirestoreListenerService : Service() {
         }
     }
 
-    private fun updateBadgeCount(change: Int) {
+    private fun incrementBadgeCount() {
         val sharedPref = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
         val currentTotal = sharedPref.getInt(BADGE_COUNT_KEY, 0)
-        val newTotal = maxOf(0, currentTotal + change)
+        val newTotal = currentTotal + 1
 
-        sharedPref.edit().putInt(BADGE_COUNT_KEY, newTotal).apply()
+        sharedPref.edit { putInt(BADGE_COUNT_KEY, newTotal) }
         Log.d("FirestoreListener", "Badge count updated. New total: $newTotal")
     }
 }

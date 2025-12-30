@@ -19,7 +19,6 @@ import com.google.android.material.badge.BadgeUtils
 import com.google.android.material.badge.ExperimentalBadgeUtils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import androidx.core.content.edit
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
@@ -135,13 +134,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
 
         binding.notificationContainer.setOnClickListener {
-            // 1. 获取 SharedPreferences
-            val sharedPref = requireActivity().getSharedPreferences("app_notifications", Context.MODE_PRIVATE)
 
-            // 2. 将后台的角标计数值清零
-            sharedPref.edit { // 使用已有的 anko 扩展函数
-                putInt("badge_count", 0)
-            }
+            FirestoreListenerService.resetBadgeCount(requireContext())
 
             // 3. 立即调用我们的函数来更新UI（它会发现计数值为0并移除红点）
             setupNotificationBadge()
