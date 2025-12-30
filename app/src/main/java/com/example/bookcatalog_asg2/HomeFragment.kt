@@ -169,13 +169,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
                 applyFilters()
             }
-            .addOnFailureListener {
-                Toast.makeText(
-                    requireContext(),
-                    R.string.error_load_events,
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+
     }
 
     private fun applyFilters() {
